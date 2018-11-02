@@ -16,7 +16,7 @@ module.exports = {
     },
     //get user by id
     getUser: async (req, res, next) => {
-        const { userId } = req.params;
+        const { userId } = req.value.params;
         const user = await User.findById(userId).populate('cars');
         res.status(200).json(user);
     },

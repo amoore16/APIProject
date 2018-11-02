@@ -12,7 +12,7 @@ const app = express();
 // routes
 const users = require('./routes/users');
 
-//middleware (logs server stuff)
+//middleware (logs server stuff like get and post)
 app.use(logger('dev'));
 app.use(bodyparser.json());
 
