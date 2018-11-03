@@ -3,27 +3,31 @@ const Car = require('../models/car');
 
 module.exports = {
     //get all users
+    //validation done
     index: async (req, res, next) => {
             const users = await User.find({});
             res.status(200).json(users);
     },
     //post new
+    //validation done
     newUser: async (req, res, next) => {
-            const newUser = new User(req.body);
+            const newUser = new User(req.value.body);
+            // const newUser = new User(req.body);
             const user = await newUser.save();
             res.status(201).json(user);
         
     },
     //get user by id
+    //validation done
     getUser: async (req, res, next) => {
         const { userId } = req.value.params;
         const user = await User.findById(userId).populate('cars');
         res.status(200).json(user);
     },
-
+    //validation done
     replaceUser: async (req, res, next) => {
-        const { userId } = req.params;
-        const newUser = req.body;
+        const { userId } = req.value.params;
+        const newUser = req.value.body;
         const result = await User.findByIdAndUpdate( userId, newUser );
         res.status(200).json({ success: true });
     },
