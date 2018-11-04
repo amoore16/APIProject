@@ -15,11 +15,15 @@ router.route('/:userId')
     .put([validateParam(schemas.idSchema, 'userId'),
         validateBody(schemas.userSchema)],
         UsersController.replaceUser)
-    .patch(UsersController.updateUser);
+    .patch([validateParam(schemas.idSchema, 'userId'),
+        validateBody(schemas.userOptionalSchema)],
+        UsersController.updateUser);
 
 router.route('/:userId/cars')
-    .get(UsersController.getUserCars)
-    .post(UsersController.newUserCar);
+    .get(validateParam(schemas.idSchema, 'userId'), UsersController.getUserCars)
+    .post([validateParam(schemas.idSchema, 'userId'), 
+            validateBody(schemas.carSchema)], 
+            UsersController.newUserCar);
 
 
 module.exports = router;

@@ -31,25 +31,25 @@ module.exports = {
         const result = await User.findByIdAndUpdate( userId, newUser );
         res.status(200).json({ success: true });
     },
-
+    // Validation: done
     updateUser: async (req, res, next) => {
-        const { userId } = req.params;
-        const newUser = req.body;
+        const { userId } = req.value.params;
+        const newUser = req.value.body;
         const result = await User.findByIdAndUpdate( userId, newUser );
         res.status(200).json({ success: true });
     },
-
+    //Validation: Done
     getUserCars: async (req, res, next) => {
-        const { userId } = req.params;
+        const { userId } = req.value.params;
         const user = await User.findById(userId).populate('cars');
         res.status(200).json(user.cars);
     },
-
+    //Validatio: Done
     newUserCar: async (req, res, next) => {
         //using this user id
-        const { userId } = req.params;
+        const { userId } = req.value.params;
         //create new car
-        const newCar = new Car(req.body);
+        const newCar = new Car(req.value.body);
         //get user
         const user = await User.findById(userId);
         //Assign user as a car's seller
