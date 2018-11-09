@@ -11,6 +11,7 @@ const app = express();
 
 // routes
 const users = require('./routes/users');
+const cars = require('./routes/cars');
 
 //middleware (logs server stuff like get and post)
 app.use(logger('dev'));
@@ -18,7 +19,7 @@ app.use(bodyparser.json());
 
 //routes    
 app.use('/users', users);
-
+app.use('/cars', cars);
 // catch 404 errors and forward them to error handler
 app.use((req, res, next) => {
     const err = new Error('Not Found');

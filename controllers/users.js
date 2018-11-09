@@ -21,7 +21,7 @@ module.exports = {
     //validation done
     getUser: async (req, res, next) => {
         const { userId } = req.value.params;
-        const user = await User.findById(userId).populate('cars');
+        const user = await User.findById(userId);
         res.status(200).json(user);
     },
     //validation done
