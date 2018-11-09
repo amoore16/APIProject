@@ -9,7 +9,6 @@ module.exports = {
     },
 
     newCar: async (req, res, next) => {
-        console.log('req', req.value);
         // 1. find the actual seller
         const seller = await User.findById(req.value.body.seller);
         
@@ -32,7 +31,41 @@ module.exports = {
     },
 
     getCar: async (req, res, next) => {
-        const car = await Car.findById(req.params.carId);
-        res.stats(200).json(car);
+        const car = await Car.findById(req.value.params.carId);
+        res.status(200).json(car);
+    },
+
+    replaceCar: async (req, res, next) => {
+        const { carId } = req.value.params;
+        const newCar = req.value.body;
+
+        const result = await Car.findByIdAndUpdate(carId, newCar);
+        res.status(200).json({ success: true});
+    },
+
+    updateCar: async (req, res, next) => {
+        const { carId } = req.value.params;
+        const newCar = req.value.body;
+        const result = await Car.findByIdAndUpdate(carId, newCar);
+        res.status(200).json({ message: true });
+    },
+
+    deleteCar: async (req, res, next) => {
+        const { carId } = req.value.params; 
+        //get car
+        const car = await Car.findById(carId);
+        if (!car) {
+            return res.status(404).json({error:'Car doesn\'t exit' });
+        }
+        // get seller
+        const sellerId = car.seller;
+        const seller = await User.findById(sellerId);
+        //Remove car
+        await car.remove();
+        //remove car from seller's list
+        seller.cars.pull(car);
+        await seller.save();
+        res.status(200).json({ success: true});
+
     }
 }
